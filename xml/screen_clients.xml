@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="ClientListScreenWidget">
+        <t t-jquery="span[class*='new-customer']" t-operation="after">
+            <t t-if="!widget.pos.config.hide_supplier">
+                <span class='button only_customer not_highlight' style="left: 10%;border-color: whitesmoke;background: rgb(230,230,230);top: 1px; border-radius: 5px">
+                    Customer
+                </span>
+                <span class='button only_supplier not_highlight' style="left: 25%;border-color: whitesmoke;background: rgb(230,230,230);top: 1px; border-radius: 5px">
+                    Supplier
+                </span>
+            </t>
+        </t>
+        <t t-jquery="table[class*='client-list']" t-operation="replace">
+            <table class='client-list'>
+                <thead>
+                    <tr>
+                        <th><a href="#" class="sort sort_by_id">ID</a><i class="fa fa-sort"/></th>
+                        <th><a href="#" class="sort sort_by_name">Name</a><i class="fa fa-sort"/></th>
+                        <th><a href="#" class="sort sort_by_address">Address</a><i class="fa fa-sort"/></th>
+                        <th><a href="#" class="sort sort_by_phone">Phone</a><i class="fa fa-sort"/></th>
+                        <th><a href="#" class="sort sort_by_mobile">Mobile</a><i class="fa fa-sort"/></th>
+                    </tr>
+                </thead>
+                <tbody class='client-list-contents'>
+                </tbody>
+            </table>
+        </t>
+    </t>
+
+    <t t-extend="ClientLine">
+        <t t-jquery="tr[class*='client-line']" t-operation="replace">
+            <tr class='client-line' t-att-data-id='partner.id'>
+                <td><t t-esc='partner.id' /></td>
+                <td><t t-esc='partner.name' /></td>
+                <td><t t-esc='partner.address' /></td>
+                <td><t t-esc='partner.phone or ""' /></td>
+                <td><t t-esc='partner.mobile or ""' /></td>
+            </tr>
+        </t>
+    </t>
+
+    <t t-extend="ClientDetailsEdit">
+        <t t-jquery="section[class*='client-details']" t-operation="replace">
+            <section class='touch-scrollable scrollable-y client-details' style="height: 350px">
+                <div class='client-picture'>
+                    <t t-if='!partner.id'>
+                        <i class='fa fa-camera'></i>
+                    </t>
+                    <t t-if='partner.id'>
+                        <img t-att-src='widget.partner_icon_url(partner.id)' />
+                    </t>
+                    <input type='file' class='image-uploader'></input>
+                </div>
+                <input class='detail client-name' name='name' t-att-value='partner.name' placeholder='Name'></input>
+                <div class='edit-buttons'>
+                    <div class='button undo'>
+                        <span>
+                            <img src="/pos_retail/static/src/icons/back.png" class="button_logo"/>
+                        </span>
+                    </div>
+                    <div class='button save'>
+                        <span>
+                            <img src="/pos_retail/static/src/icons/save.png" class="button_logo"/>
+                        </span>
+                    </div>
+                </div>
+                <div class='client-details-box clearfix'>
+                    <div class='client-details-left'>
+                        <div class='client-detail'>
+                            <span class='label'>Street</span>
+                            <input class='detail client-address-street' name='street'       t-att-value='partner.street || ""' placeholder='Street'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>City</span>
+                            <input class='detail client-address-city'   name='city'         t-att-value='partner.city || ""' placeholder='City'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Postcode</span>
+                            <input class='detail client-address-zip'    name='zip'          t-att-value='partner.zip || ""' placeholder='ZIP'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <div class='client-detail'>
+                                <span class='label'>Internal notes</span>
+                                <input class='detail client-comment'   name='comment'         t-att-value='partner.comment || ""' placeholder='Internal note'></input>
+                            </div>
+                        </div>
+                        <t t-if="!widget.pos.config.hide_country">
+                            <div class='client-detail'>
+                                <span class='label'>Country</span>
+                                <select class='detail client-address-country needsclick' name='country_id'>
+                                    <option value=''>None</option>
+                                    <t t-foreach='widget.pos.countries' t-as='country'>
+                                        <option t-att-value='country.id' t-att-selected="partner.country_id ? ((country.id === partner.country_id[0]) ? true : undefined) : undefined">
+                                            <t t-esc='country.name'/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                        </t>
+                    </div>
+                    <div class='client-details-right'>
+                        <div class='client-detail'>
+                            <span class='label'>Email</span>
+                            <input class='detail client-email'  name='email'    type='email'    t-att-value='partner.email || ""'></input>
+                        </div>
+                        <div class='client-detail'>
+                            <span class='label'>Phone</span>
+                            <input class='detail client-phone'  name='phone'    type='tel'      t-att-value='partner.phone || ""'></input>
+                        </div>
+                        <t t-if="!widget.pos.config.hide_barcode">
+                            <div class='client-detail'>
+                                <span class='label'>Barcode</span>
+                                <input class='detail barcode'       name='barcode'    t-att-value='partner.barcode || ""'></input>
+                            </div>
+                        </t>
+                        <t t-if="!widget.pos.config.hide_tax">
+                            <div class='client-detail'>
+                                <span class='label'>Tax ID</span>
+                                <input class='detail vat'           name='vat'     t-att-value='partner.vat || ""'></input>
+                            </div>
+                        </t>
+                        <t t-if="!widget.pos.config.hide_pricelist">
+                            <div t-attf-class='client-detail #{widget.pos.pricelists.length &lt;= 1 ? "oe_hidden" : ""}'>
+                                <span class='label'>Pricelist</span>
+                                <select class='detail client-address-country needsclick' name='property_product_pricelist'>
+                                    <option value=''>None</option>
+                                    <t t-foreach='widget.pos.pricelists' t-as='pricelist'>
+                                        <option t-att-value='pricelist.id' t-att-selected="pricelist.id ? ( partner.property_product_pricelist and (pricelist.id === partner.property_product_pricelist[0]) ? true : undefined) : undefined">
+                                            <t t-esc='pricelist.name'/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                        </t>
+                        <t t-if="widget.pos.config.opt_out">
+                            <div class='client-detail'>
+                                <span class='label'>Opt out</span>
+                                    <t t-if="partner.id">
+                                        <input class="detail opt_out"
+                                               type="checkbox" name="opt_out"
+                                               t-att-checked="(partner.opt_out ? true : undefined)"
+                                               t-att-value='(partner.opt_out ? true : false)'/>
+                                    </t>
+                                    <t t-if="!partner.id">
+                                        <input class="detail opt_out"
+                                               type="checkbox" name="opt_out"
+                                               checked="true"
+                                               value="true"/>
+                                    </t>
+                            </div>
+                        </t>
+                        <t t-if="widget.pos.config.sms_opt_out">
+                            <div class='client-detail'>
+                                <span class='label'>Sms opt out</span>
+                                <t t-if="att-partner.id">
+                                    <input class="detail sms_opt_out"
+                                       type="checkbox" name="sms_opt_out"
+                                       t-att-checked="(partner.sms_opt_out ? true : undefined)"
+                                       t-att-value='(partner.sms_opt_out ? true : false)'/>
+                                </t>
+                                <t t-if="!partner.id">
+                                    <input class="detail sms_opt_out"
+                                       type="checkbox" name="sms_opt_out"
+                                       checked="true"
+                                       value='true'/>
+                                </t>
+                            </div>
+                        </t>
+                        <t t-if="widget.pos.config.call_opt_out">
+                            <div class='client-detail'>
+                                <span class='label'>Call opt out</span>
+                                <t t-if="partner.id">
+                                    <input class="detail call_opt_out"
+                                        type="checkbox" name="call_opt_out"
+                                        t-att-checked="(partner.call_opt_out ? true : undefined)"
+                                        t-att-value='(partner.call_opt_out ? true : false)'/>
+                                </t>
+                                <t t-if="!partner.id">
+                                    <input class="detail call_opt_out"
+                                        type="checkbox" name="call_opt_out"
+                                        checked="true"
+                                        value='true'/>
+                                </t>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </section>
+        </t>
+    </t>
+
+    <t t-extend="ClientDetails">
+        <t t-jquery="div[class*='edit-buttons']" t-operation="replace">
+            <div class='edit-buttons'>
+                <div class='button edit'>
+                    <img src="/pos_retail/static/src/icons/note.png" class="button_logo"/>
+                </div>
+            </div>
+        </t>
+        <t t-jquery="div[class*='client-details-left']" t-operation="append">
+            <t t-if="partner.vat">
+                <div class='client-detail'>
+                    <span class='label'>TIN</span>
+                    <span class='detail'><t t-esc='partner.vat'/></span>
+                </div>
+            </t>
+            <t t-if="partner.comment">
+                <div class='client-detail'>
+                    <span class='label'>Internal notes</span>
+                    <span class='detail'><t t-esc='partner.comment'/></span>
+                </div>
+            </t>
+        </t>
+        <t t-jquery="div[class*='client-details-right']" t-operation="append">
+            <t t-if="partner.property_account_position_id">
+                <div class='client-detail'>
+                    <span class='label'>Fiscal Position</span>
+                    <span class='detail'><t t-esc='partner.property_account_position_id[1]'/></span>
+                </div>
+            </t>
+            <t t-if="partner.wallet != 0">
+                <div class='client-detail'>
+                    <span class='label'>Wallet card</span>
+                    <span class='detail'><t t-esc='widget.format_currency(partner.wallet)'/></span>
+                </div>
+            </t>
+            <t t-if="partner.balance != 0">
+                <div class='client-detail'>
+                    <span class='label'>Credit card</span>
+                    <span class='detail'><t t-esc='widget.format_currency(partner.balance)'/></span>
+                </div>
+            </t>
+            <t t-if="widget.pos.config.opt_out">
+                <div class='client-detail'>
+                    <span class='label'>Opt out</span>
+                    <input class="detail opt_out" type="checkbox" name="opt_out" t-att-checked="(partner.opt_out ? true : undefined)" t-att-value='partner.opt_out'/>
+                </div>
+            </t>
+            <t t-if="widget.pos.config.sms_opt_out">
+                <div class='client-detail'>
+                    <span class='label'>Sms opt out</span>
+                    <input class="detail sms_opt_out" type="checkbox" name="sms_opt_out" t-att-checked="(partner.sms_opt_out ? true : undefined)" t-att-value='partner.sms_opt_out'/>
+                </div>
+            </t>
+            <t t-if="widget.pos.config.call_opt_out">
+                <div class='client-detail'>
+                    <span class='label'>Call opt out</span>
+                    <input class="detail call_opt_out" type="checkbox" name="call_opt_out" t-att-checked="(partner.call_opt_out ? true : undefined)" t-att-value='partner.call_opt_out'/>
+                </div>
+            </t>
+        </t>
+    </t>
+
+</templates>

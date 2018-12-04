@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="PaymentScreenWidget">
+        <!--<t t-jquery="div[class*='js_set_customer']" t-operation="after"> single app-->
+        <t t-jquery="span[class*='js_set_customer']" t-operation="after">
+            <t t-if="widget.pos.config.scan_voucher">
+                <span class="product left_button input_voucher">
+                    <div class="button_icon">
+                        <img src="/pos_retail/static/src/icons/voucher.png" class="pos_logo"/>
+                    </div>
+                    <div class="product-name button_text">
+                        Voucher
+                        <t t-if="widget.pos.config.keyboard_event">
+                            <span class="button_key">
+                                <i class="fa fa-keyboard"></i>
+                                v
+                            </span>
+                        </t>
+                    </div>
+                </span>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="popup_print_vouchers"> <!-- print create voucher -->
+        <div class="modal-dialog">
+            <div class="popup touch-scrollable scrollable-y">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row">
+                            <span class='label voucher-label'>Card number</span>
+                            <div class="col-sm-7">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <input class="form-control number"
+                                           type="text"
+                                           required="true" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class='label voucher-label'>Period days</span>
+                            <div class="col-sm-7">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <input class="form-control period_days"
+                                           type="number"
+                                           t-att-value="widget.pos.config.expired_days_voucher"
+                                           required="true" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class='label voucher-label'>Quantity will create</span>
+                            <div class="col-sm-7">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <input class="form-control quantity_create"
+                                           type="number"
+                                           />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class='label voucher-label'>Amount or Percent</span>
+                            <div class="col-sm-7">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <input class="form-control voucher_amount"
+                                           t-att-value="widget.options.voucher_amount || 0"
+                                           type="number"
+                                           id="voucher_amount"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class='label voucher-label'>Type of Voucher</span>
+                            <div class="col-sm-7">
+                                <select class='form-control voucher-select apply_type'>
+                                    <option value="fixed_amount">Fixed amount</option>
+                                    <option value="percent">Percent (%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class='label voucher-label'>Apply to</span>
+                            <div class="col-sm-7">
+                                <select class='form-control voucher-select method'>
+                                    <option value="general">All Customers</option>
+                                    <option value="special_customer">Special Customer</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-footer text-center">
+                        <div class="btn btn-success pull-right print-voucher">
+                            <i class="fa fa-print"/> Print
+                        </div>
+                        <div class="btn btn-danger pull-left cancel">
+                            Close
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="vouchers_screen">
+        <div class='receipt-screen screen'>
+            <div class='screen-content'>
+                <div class='top-content'>
+                    <span class='button back'>
+                        Back
+                        <i class='fa fa-angle-double-left'></i>
+                    </span>
+                </div>
+                <div class="centered-content touch-scrollable">
+                    <div class="button print">
+                        <i class='fa fa-print'></i>Print
+                    </div>
+                    <div class="pos-receipt-container" style="font-size:12px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="voucher_ticket_xml">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <div><h2><t t-esc='voucher.number' /></h2></div>
+            <t t-if='datas.company.logo'>
+                <img t-att-src='datas.company.logo' />
+                <br/>
+            </t>
+            <t t-if='!datas.company.logo'>
+                <h1><t t-esc='datas.company.name' /></h1>
+                <br/>
+            </t>
+            <div font='b'>
+                <t t-if='datas.company.contact_address'>
+                    <div><t t-esc='datas.company.contact_address' /></div>
+                </t>
+                <t t-if='datas.company.phone'>
+                    <div>Tel:<t t-esc='datas.company.phone' /></div>
+                </t>
+                <t t-if='datas.company.vat'>
+                    <div>VAT:<t t-esc='datas.company.vat' /></div>
+                </t>
+                <t t-if='datas.company.email'>
+                    <div><t t-esc='datas.company.email' /></div>
+                </t>
+                <t t-if='datas.company.website'>
+                    <div><t t-esc='datas.company.website' /></div>
+                </t>
+                <t t-if='datas.cashier'>
+                    <div class='cashier'>
+                        <div>--------------------------------</div>
+                        <div>Created by: <t t-esc='datas.cashier' /></div>
+                    </div>
+                </t>
+                <t t-if='voucher.partner_name'>
+                    <div class='cashier'>
+                        <div><h3><t t-esc='voucher.partner_name' /></h3></div>
+                    </div>
+                </t>
+                <t>
+                    <div class='cashier'>
+                        <div>Please keep Your Secret Voucher Code Safe</div>
+                    </div>
+                </t>
+                <barcode encoding="ean13" t-att-data-id="voucher.id" t-att-data-value="voucher.code">
+                    <t t-esc='voucher.code'/>
+                </barcode>
+                <t t-if="voucher.apply_type">
+                    <div class='cashier'>
+                        <div>Apply type : <t t-esc='voucher.apply_type' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.method">
+                    <div class='cashier'>
+                        <div>Method : <t t-esc='voucher.method' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.value">
+                    <div class='cashier'>
+                        <div>With value: <t t-esc='voucher.value' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.end_date">
+                    <div class='cashier'>
+                        <div>Expiry date of voucher:  <t t-esc='voucher.end_date' /></div>
+                    </div>
+                </t>
+                <div class='cashier'>
+                    <h3><div>Thanks you.</div></h3>
+                </div>
+            </div>
+            <br />
+        </receipt>
+    </t>
+
+    <t t-name="voucher_ticket_html">
+        <receipt align='center' width='40' value-thousands-separator='' >
+            <div><h2><t t-esc='voucher.number' /></h2></div>
+            <t t-if='datas.company.logo'>
+                <img t-att-src='datas.company.logo' />
+                <br/>
+            </t>
+            <t t-if='!datas.company.logo'>
+                <h1><t t-esc='datas.company.name' /></h1>
+                <br/>
+            </t>
+            <div font='b'>
+                <t t-if='datas.company.contact_address'>
+                    <div><t t-esc='datas.company.contact_address' /></div>
+                </t>
+                <t t-if='datas.company.phone'>
+                    <div>Tel:<t t-esc='datas.company.phone' /></div>
+                </t>
+                <t t-if='datas.company.vat'>
+                    <div>VAT:<t t-esc='datas.company.vat' /></div>
+                </t>
+                <t t-if='datas.company.email'>
+                    <div><t t-esc='datas.company.email' /></div>
+                </t>
+                <t t-if='datas.company.website'>
+                    <div><t t-esc='datas.company.website' /></div>
+                </t>
+                <t t-if='datas.cashier'>
+                    <div class='cashier'>
+                        <div>--------------------------------</div>
+                        <div>Created by: <t t-esc='datas.cashier' /></div>
+                    </div>
+                </t>
+                <t t-if='voucher.partner_name'>
+                    <div class='cashier'>
+                        <div><h3><t t-esc='voucher.partner_name' /></h3></div>
+                    </div>
+                </t>
+                <t>
+                    <div class='cashier'>
+                        <div>Please keep Your Secret Voucher Code Safe</div>
+                    </div>
+                </t>
+                <img t-if="voucher.code" t-att-src="voucher.url_barcode" style="width:200px;height:80px;"/>
+                <t t-if="voucher.apply_type">
+                    <div class='cashier'>
+                        <div>Apply type : <t t-esc='voucher.apply_type' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.method">
+                    <div class='cashier'>
+                        <div>Method : <t t-esc='voucher.method' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.value">
+                    <div class='cashier'>
+                        <div>With value: <t t-esc='voucher.value' /></div>
+                    </div>
+                </t>
+                <t t-if="voucher.end_date">
+                    <div class='cashier'>
+                        <div>Expiry date of voucher:  <t t-esc='voucher.end_date' /></div>
+                    </div>
+                </t>
+                <div class='cashier'>
+                    <h3><div>Thanks you.</div></h3>
+                </div>
+            </div>
+            <br />
+        </receipt>
+    </t>
+
+</templates>
