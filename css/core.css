@@ -109,7 +109,7 @@
 }
 
 .pos .buttons_pane {
-    background: #9e8f85;
+    background: #fafafa;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -392,19 +392,19 @@
 
 .pos .select-currency {
     background: white;
-    color: blueviolet;
+    color: #4a4a4a;
     width: 100%;
     height: 40px;
     font-size: 16px;
 }
 
 .pos .currency-rate {
-    color: blueviolet;
+    color: white;
     font-size: 14px;
 }
 
 .pos .currency-covert {
-    color: blueviolet;
+    color: white;
     font-size: 14px;
 }
 
@@ -578,7 +578,7 @@
     border-top: solid 1px rgb(110, 200, 155);
 }
 
-.pos .paymentline. item {
+.pos .paymentline.item {
     font-size: 14px;
 }
 
@@ -721,7 +721,7 @@ select.form-control {
 
 .pos .screen {
     overflow: initial;
-    background: #dec9bb;
+    background: #fafafa;
 }
 
 .pos .return-order {
@@ -932,7 +932,7 @@ select.form-control {
 .pos .show_hide_pads {
     cursor: pointer;
     transform: scale(2, 1);
-    color: #6EC89B;
+    color: #3c4858;
     font-size: 40px;
 }
 
@@ -958,7 +958,7 @@ select.form-control {
     background: #ff6e0e;
     display: inline-block;
     margin: 2px;
-    border-radius: 5px;
+    border-radius: 2px;
     -moz-user-select: none;
     -ms-user-select: none;
     font-weight: bold;
@@ -970,7 +970,7 @@ select.form-control {
 }
 
 .pos .pads .numpad button:hover {
-    background-color: #6EC89B;
+    background-color: #4a4a4a;
 }
 
 .pos .pads .numpad {
@@ -998,33 +998,33 @@ select.form-control {
 
 .pos .actionpad .button.set-customer {
     font-family: inherit;
-    border-radius: 3px;
+    border-radius: 2px;
     -moz-user-select: none;
     -ms-user-select: none;
     border: none;
     margin-bottom: 5px;
-    background: #6EC89B;
+    background: #3c4858;
     color: white;
 }
 
 .pos .actionpad .button.set-customer:hover {
-    background-color: #6EC89B;
+    background-color: #3a3a3a;
 }
 
 .pos .actionpad .button.pay {
-    background: #6EC89B;
+    background: #3c4858;
     font-family: inherit;
     font-size: 20px;
     color: ghostwhite;
     display: inline-block;
-    border-radius: 5px;
+    border-radius: 2px;
     float: none;
     border: none;
     height: 170px;
 }
 
 .pos .actionpad .button.pay:hover {
-    background-color: #6EC89B;
+    background-color: #3a3a3a;
 }
 
 .pos .block_add_product {
@@ -1080,6 +1080,7 @@ select.form-control {
 .pos .quickly_buttons {
     padding-left: 4px;
     font-weight: bold;
+    text-align: left;
 }
 
 .pos .header_order {
@@ -1087,12 +1088,12 @@ select.form-control {
     padding-top: 4px;
     max-width: 500px;
     height: 49px;
-    background: #9e8f85;
+    background: #fff;
 }
 
 .pos .quickly_icon {
     padding-left: 3px;
-    float: left;
+    /* float: left; */
     max-height: 15px;
     display: inline-block;
     cursor: pointer;
@@ -1108,7 +1109,7 @@ select.form-control {
 }
 .pos .rightpane {
     left: 740px;
-    background: #9e8f85;
+    background: #fafafa;
 }
 
 .pos .collapse .in {
@@ -1141,8 +1142,8 @@ select.form-control {
     text-align: center;;
     line-height: initial;
     margin: 5px !important;
-    border-radius: 10px;
-    background: #3e2c1c;
+    border-radius: 2px;
+    background: #4a4a4a;
     color: white;
 }
 
@@ -1155,7 +1156,7 @@ select.form-control {
 }
 
 .pos .left_button:hover {
-    background-color: #999999;
+    background-color: #3a3a3a;
     color: white;
     cursor: pointer;
 }
@@ -1182,7 +1183,7 @@ select.form-control {
 
 .pos .highlight {
     color: white;
-    background: #6EC89B;
+    background: #111;
 
 }
 
@@ -1270,13 +1271,14 @@ select.form-control {
 }
 
 .pos .searchbox input {
-    border-radius: 5px;
+    border-radius: 2px;
 }
 
 .pos .order .orderline {
     border: none;
     padding-left: 5px;
     padding-right: 10px;
+    background-color: #f2f2f2;
 }
 
 .pos .order .orderline .info-list em {
@@ -1302,7 +1304,7 @@ select.form-control {
 }
 
 .pos .order .orderline.selected {
-    background: #6EC89B;
+    background: #ff6e0e40;
     color: #635b5b;
 }
 
@@ -1317,7 +1319,7 @@ select.form-control {
 .pos .order .summary .total {
     font-size: 22px;
     float: right;
-    color: #6EC89B;
+    color: #3c4858;
     margin-bottom: 100px;
     padding-right: 5px;
 }
@@ -1383,33 +1385,36 @@ select.form-control {
 }
 
 .pos .rightpane-header {
-    background: #9e8f85;
+    background: #fafafa;
     height: 48px;
     border-bottom: 0px;
 }
 
 .pos .order-button.selected {
-    background: #aaaaaa;
+    background: #3a3a3a;
     color: white;
     height: auto;
+    border-radius: 0;
     border-bottom: none;
 }
 
 .pos .order-button {
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
-    background: #ffffff;
-    color: #635b5b;
-    border-radius: 5px;
+    background: transparent;
+    color: white;
+    border-radius: 0;
     height: auto;
     margin: 1px;
 }
 
 .pos .order-button.square {
-    background: white;
-    color: black;
-    font-size: 12px
-
+    background: transparent;
+    /* background: #3a3a3a; */
+    color: white;
+    font-size: 12px;
+    padding: 0;
+    border-radius: 0;
 }
 
 .pos .category-button {
@@ -1524,12 +1529,15 @@ select.form-control {
 }
 
 .pos .payment-screen .pos-sale-ticket {
-    background-color: #6EC89B;
+    background-color: #fff;
     width: 274px;
-    color: white;
+    color: #000;
     font-size: 14px;
     font-weight: bold;
-    border: solid 1px rgb(51, 43, 43)
+    border: solid 1px rgb(51, 43, 43);
+    max-height: 580px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .pos .ticket_image {
@@ -1652,7 +1660,7 @@ select.form-control {
 }
 
 .pos .text_logo {
-    color: ghostwhite;
+    color: #777;
 }
 
 .pos .category-simple-button {
@@ -1671,5 +1679,28 @@ select.form-control {
 }
 .payment-screen .paymentlines-empty .total {
     text-shadow: none;
-    font-weight: bold
+    font-weight: bold;
+    color: #ff6e0e;
+}
+
+.pos .paymentline.selected {
+    background-color: #4a4a4a;
+}
+
+.pos .order-button.selected .order-sequence {
+    color: white;
+    background: transparent;
+    /* background: #ff6e0e; */
+    display: inline-block;
+    line-height: 24px;
+    min-width: 24px;
+    border-radius: 12px;
+    margin-right: 4px;
+    margin-left: -4px;
+}
+
+.pos .button.highlight {
+    background-color: #4a4a4a !important;
+    border: solid 1px #4a4a4a !important;
+    color: white !important;
 }
